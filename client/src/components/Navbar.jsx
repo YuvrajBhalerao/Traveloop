@@ -14,7 +14,7 @@ const Navbar = () => {
       <h2>Traveloop</h2>
 
       <div style={{ display: "flex", gap: "1rem" }}>
-        <Link to="/">Dashboard</Link>
+        <Link to="/dashboard">Dashboard</Link>
         <Link to="/create-trip">Create Trip</Link>
       </div>
     </nav>
