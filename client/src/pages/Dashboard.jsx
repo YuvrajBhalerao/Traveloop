@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
-import API from "../services/api";
 import Navbar from "../components/Navbar";
-import TripCard from "../components/TripCard";
 
 const Dashboard = () => {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
-    fetchTrips();
-  }, []);
+    const savedTrips =
+      JSON.parse(localStorage.getItem("trips")) || [];
 
-  const fetchTrips = async () => {
-    try {
-      const res = await API.get("/trips");
-      setTrips(res.data.trips);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    setTrips(savedTrips);
+  }, []);
 
   return (
     <>
@@ -28,9 +20,29 @@ const Dashboard = () => {
 
         <br />
 
-        {trips.map((trip) => (
-          <TripCard key={trip._id} trip={trip} />
-        ))}
+        {trips.length === 0 ? (
+          <p>No trips created yet.</p>
+        ) : (
+          trips.map((trip) => (
+            <div
+              key={trip.id}
+              style={{
+                border: "1px solid #ccc",
+                padding: "1rem",
+                marginBottom: "1rem",
+                borderRadius: "10px",
+              }}
+            >
+              <h3>{trip.destination}</h3>
+
+              <p>
+                {trip.startDate} → {trip.endDate}
+              </p>
+
+              <p>Budget: ₹{trip.budget}</p>
+            </div>
+          ))
+        )}
       </div>
     </>
   );
