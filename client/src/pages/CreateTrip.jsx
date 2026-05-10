@@ -7,24 +7,32 @@ const CreateTrip = () => {
     destination: "",
     startDate: "",
     endDate: "",
-    budget: ""
+    budget: "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await API.post("/trips", form);
+      const res = await API.post(
+        "/trips",
+        form
+      );
 
       alert("Trip Created Successfully");
+
+      console.log(res.data);
 
       setForm({
         destination: "",
         startDate: "",
         endDate: "",
-        budget: ""
+        budget: "",
       });
+
     } catch (error) {
+      console.error(error);
+
       alert("Failed to create trip");
     }
   };
@@ -37,15 +45,15 @@ const CreateTrip = () => {
         <h1>Create Trip</h1>
 
         <form onSubmit={handleSubmit}>
+
           <input
             type="text"
             placeholder="Destination"
-            required
             value={form.destination}
             onChange={(e) =>
               setForm({
                 ...form,
-                destination: e.target.value
+                destination: e.target.value,
               })
             }
           />
@@ -54,12 +62,11 @@ const CreateTrip = () => {
 
           <input
             type="date"
-            required
             value={form.startDate}
             onChange={(e) =>
               setForm({
                 ...form,
-                startDate: e.target.value
+                startDate: e.target.value,
               })
             }
           />
@@ -68,12 +75,11 @@ const CreateTrip = () => {
 
           <input
             type="date"
-            required
             value={form.endDate}
             onChange={(e) =>
               setForm({
                 ...form,
-                endDate: e.target.value
+                endDate: e.target.value,
               })
             }
           />
@@ -83,12 +89,11 @@ const CreateTrip = () => {
           <input
             type="number"
             placeholder="Budget"
-            required
             value={form.budget}
             onChange={(e) =>
               setForm({
                 ...form,
-                budget: e.target.value
+                budget: e.target.value,
               })
             }
           />
@@ -98,6 +103,7 @@ const CreateTrip = () => {
           <button type="submit">
             Create Trip
           </button>
+
         </form>
       </div>
     </>
