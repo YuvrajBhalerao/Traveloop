@@ -1,89 +1,35 @@
 const Trip = require("../models/Trip");
 
-// =========================
-// Create Trip
-// =========================
-exports.createTrip = async (req, res, next) => {
+exports.createTrip = async (req, res) => {
   try {
-    const { destination, startDate, endDate, budget } = req.body;
-
-    const trip = await Trip.create({
-      destination,
-      startDate,
-      endDate,
-      budget
-    });
+    const trip = await Trip.create(req.body);
 
     res.status(201).json({
       success: true,
-      trip
+      trip,
     });
+
   } catch (error) {
-    next(error);
+    console.log(error);
+
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };
 
-// =========================
-// Get All Trips
-// =========================
-exports.getTrips = async (req, res, next) => {
+exports.getTrips = async (req, res) => {
   try {
-    const trips = await Trip.find().sort({ createdAt: -1 });
+    const trips = await Trip.find();
 
-    res.status(200).json({
+    res.json({
       success: true,
-      count: trips.length,
-      trips
+      trips,
     });
+
   } catch (error) {
-    next(error);
-  }
-};
-
-// =========================
-// Get Single Trip
-// =========================
-exports.getTripById = async (req, res, next) => {
-  try {
-    const trip = await Trip.findById(req.params.id);
-
-    if (!trip) {
-      return res.status(404).json({
-        success: false,
-        message: "Trip not found"
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      trip
+    res.status(500).json({
+      message: error.message,
     });
-  } catch (error) {
-    next(error);
-  }
-};
-
-// =========================
-// Delete Trip
-// =========================
-exports.deleteTrip = async (req, res, next) => {
-  try {
-    const trip = await Trip.findById(req.params.id);
-
-    if (!trip) {
-      return res.status(404).json({
-        success: false,
-        message: "Trip not found"
-      });
-    }
-
-    await trip.deleteOne();
-
-    res.status(200).json({
-      success: true,
-      message: "Trip deleted successfully"
-    });
-  } catch (error) {
-    next(error);
   }
 };
