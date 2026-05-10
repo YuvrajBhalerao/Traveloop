@@ -1,0 +1,57 @@
+[33m475066a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Saved remaining project changes
+[33mb894955[m Added premium UI and trip dashboard features
+[33m146d47a[m Clean up tripRoutes by removing unused endpoints
+[33m7bc2565[m Refactor tripController methods for clarity and efficiency
+[33mae64f87[m Refactor tripSchema for cleaner syntax
+[33m16efe1a[m Refactor CreateTrip form handling and remove required attributes
+[33mcc41b41[m Update API base URL for local development
+[33mb936418[m Update Navbar.jsx
+[33m2b04097[m Update Login component with demo authentication
+[33mbbed163[m Swap Login and Dashboard routes
+[33m8594945[m Add initial HTML structure for Traveloop
+[33m0597f01[m Modify database URI and JWT secret in .env
+[33m59fb421[m Refactor MongoDB connection and improve logging
+[33m3e8017b[m Add mongoose dependency to server.js
+[33mbebae02[m Update MONGO_URI in .env file
+[33m78bb8ff[m Implement routing in App component
+[33m988aab2[m Create Itinerary component with Navbar and placeholder text
+[33m8c39d87[m Add CreateTrip component for trip creation
+[33m7b9d1e3[m Add Dashboard component to display user trips
+[33mf0fe4ad[m Implement Login component with authentication
+[33me506228[m Add CityInput component for destination input
+[33m41fd863[m Add TripCard component to display trip details
+[33me3171ea[m Add Navbar component for navigation
+[33md9e05ee[m Add AuthContext for user authentication management
+[33m56faca6[m Add API service using axios for HTTP requests
+[33mb402f06[m Add base CSS styles for the application
+[33m0759b7b[m Initialize main.jsx with React and routing setup
+[33m2f43d7b[m Add Vite configuration for React project
+[33m327c4d7[m Add package.json for client setup
+[33m75a8667[m Add VITE_API_URL to environment configuration
+[33m2c085f3[m Implement MongoDB connection function
+[33m1f46943[m Add User model with schema and validation
+[33m39fd358[m Add Trip model with schema and timestamps
+[33m75df3a7[m Add trip routes for CRUD operations
+[33m8ad68fc[m Add authentication routes for user registration and login
+[33m95f3278[m Add error handler middleware for server
+[33mcc31657[m Implement CRUD operations for trips
+[33m971660c[m Implement user registration and login functionality
+[33mfb17be8[m Add MongoDB connection log on server start
+[33mfba0ae2[m Create package.json for Traveloop server
+[33mca32941[m Set up Express server with middleware and routes
+[33ma5cf2ad[m Add .env file with server configuration
+[33m0b9fb52[m Create package.json
+[33m3e8f156[m Create server.js
+[33meb046cc[m Create .env
+[33m959366c[m Create errorHandler.js
+[33m2b4bd49[m Create tripController.js
+[33m1fd1f93[m Create authController.js
+[33m3f29714[m Create tripRoutes.js
+[33m4f23e62[m Create authRoutes.js
+[33md393b37[m Create Trip.js
+[33m99b60c3[m Create User.js
+[33m3e94a30[m Create db.js
+[33m45cb73b[m Add render.yaml for backend and frontend services
+[33me5d622a[m Add .gitignore file with common exclusions
+[33mb1e44f9[m Add README.md for project documentation
+[33ma291207[m Initial commit

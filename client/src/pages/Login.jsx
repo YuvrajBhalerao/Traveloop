@@ -1,122 +1,112 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] =
+    useState("");
 
-  const handleSubmit = (e) => {
+  const [password, setPassword] =
+    useState("");
+
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    // Demo credentials
-    if (
-      form.email === "admin@gmail.com" &&
-      form.password === "123456"
-    ) {
-      alert("Login Successful");
-      navigate("/dashboard");
-    } else {
-      alert("Invalid Email or Password");
-    }
+    // Save logged in user
+    localStorage.setItem(
+      "traveloopUser",
+      JSON.stringify({
+        username,
+      })
+    );
+
+    // Redirect to homepage
+    navigate("/");
   };
 
   return (
     <div
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "#f4f4f4",
+        padding: "40px",
       }}
     >
-      <form
-        onSubmit={handleSubmit}
+      <div
+        className="glass-card"
         style={{
-          background: "white",
+          width: "100%",
+          maxWidth: "450px",
           padding: "40px",
-          borderRadius: "12px",
-          width: "320px",
-          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
         }}
       >
         <h1
           style={{
-            marginBottom: "20px",
-            textAlign: "center",
+            fontSize: "42px",
+            marginBottom: "10px",
+            fontWeight: "800",
           }}
         >
-          Traveloop Login
+          Welcome Back 👋
         </h1>
-
-        <input
-          type="email"
-          placeholder="Email"
-          required
-          value={form.email}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              email: e.target.value,
-            })
-          }
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "15px",
-          }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          value={form.password}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              password: e.target.value,
-            })
-          }
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "20px",
-          }}
-        />
-
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "12px",
-            background: "#0b1b3f",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Login
-        </button>
 
         <p
           style={{
-            marginTop: "15px",
-            fontSize: "14px",
-            color: "gray",
-            textAlign: "center",
+            color: "#6b7280",
+            marginBottom: "30px",
           }}
         >
-          Demo Login:
-          <br />
-          admin@gmail.com / 123456
+          Login to continue your journey.
         </p>
-      </form>
+
+        <form
+          onSubmit={handleLogin}
+          style={{
+            display: "grid",
+            gap: "20px",
+          }}
+        >
+          <input
+            type="text"
+            placeholder="Enter Username"
+            value={username}
+            onChange={(e) =>
+              setUsername(e.target.value)
+            }
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
+          />
+
+          <button
+            type="submit"
+            style={{
+              padding: "16px",
+              borderRadius: "16px",
+              background:
+                "linear-gradient(135deg,#ff512f,#dd2476)",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "700",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ const Home = () => {
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
+    // Load user
     const storedUser = localStorage.getItem(
       "traveloopUser"
     );
@@ -14,17 +15,14 @@ const Home = () => {
       setUser(JSON.parse(storedUser));
     }
 
-    loadTrips();
-  }, []);
-
-  const loadTrips = () => {
+    // Load trips
     const storedTrips =
       JSON.parse(
         localStorage.getItem("traveloopTrips")
       ) || [];
 
     setTrips(storedTrips);
-  };
+  }, []);
 
   const deleteTrip = (id) => {
     const updatedTrips = trips.filter(
@@ -52,6 +50,7 @@ const Home = () => {
             "linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45)),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop')",
           backgroundSize: "cover",
           backgroundPosition: "center",
+          padding: "40px",
         }}
       >
         <div className="container">
@@ -71,6 +70,7 @@ const Home = () => {
                   borderRadius: "14px",
                   backdropFilter: "blur(10px)",
                   display: "inline-block",
+                  fontWeight: "600",
                 }}
               >
                 Welcome, {user.username} 👋
@@ -104,7 +104,7 @@ const Home = () => {
 
       <section
         style={{
-          padding: "80px 0",
+          padding: "80px 40px",
         }}
       >
         <div className="container">

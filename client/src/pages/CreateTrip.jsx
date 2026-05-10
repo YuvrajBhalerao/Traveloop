@@ -1,112 +1,204 @@
-import { useState } from "react";
-import API from "../services/api";
-import Navbar from "../components/Navbar";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateTrip = () => {
-  const [form, setForm] = useState({
-    destination: "",
-    startDate: "",
-    endDate: "",
-    budget: "",
-  });
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const [destination, setDestination] =
+    useState("");
+
+  const [startDate, setStartDate] =
+    useState("");
+
+  const [endDate, setEndDate] =
+    useState("");
+
+  const [budget, setBudget] = useState("");
+
+  const [travelType, setTravelType] =
+    useState("");
+
+  const handleCreateTrip = (e) => {
     e.preventDefault();
 
-    try {
-      const res = await API.post(
-        "/trips",
-        form
-      );
+    const newTrip = {
+      id: Date.now(),
+      destination,
+      startDate,
+      endDate,
+      budget,
+      travelType,
+    };
 
-      alert("Trip Created Successfully");
+    const existingTrips =
+      JSON.parse(
+        localStorage.getItem("traveloopTrips")
+      ) || [];
 
-      console.log(res.data);
+    existingTrips.push(newTrip);
 
-      setForm({
-        destination: "",
-        startDate: "",
-        endDate: "",
-        budget: "",
-      });
+    localStorage.setItem(
+      "traveloopTrips",
+      JSON.stringify(existingTrips)
+    );
 
-    } catch (error) {
-      console.error(error);
-
-      alert("Failed to create trip");
-    }
+    navigate("/");
   };
 
   return (
-    <>
-      <Navbar />
+    <div
+      style={{
+        minHeight: "100vh",
+        padding: "60px 20px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        className="glass-card"
+        style={{
+          width: "100%",
+          maxWidth: "700px",
+          padding: "40px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "48px",
+            marginBottom: "12px",
+            fontWeight: "800",
+          }}
+        >
+          Create Your Dream Trip ✈️
+        </h1>
 
-      <div style={{ padding: "2rem" }}>
-        <h1>Create Trip</h1>
+        <p
+          style={{
+            color: "#6b7280",
+            marginBottom: "35px",
+            fontSize: "17px",
+          }}
+        >
+          Plan your next unforgettable journey with Traveloop.
+        </p>
 
-        <form onSubmit={handleSubmit}>
-
+        <form
+          onSubmit={handleCreateTrip}
+          style={{
+            display: "grid",
+            gap: "22px",
+          }}
+        >
           <input
             type="text"
             placeholder="Destination"
-            value={form.destination}
+            value={destination}
             onChange={(e) =>
-              setForm({
-                ...form,
-                destination: e.target.value,
-              })
+              setDestination(e.target.value)
             }
+            required
           />
 
-          <br /><br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit,minmax(250px,1fr))",
+              gap: "20px",
+            }}
+          >
+            <div>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: "600",
+                }}
+              >
+                Start Date
+              </label>
 
-          <input
-            type="date"
-            value={form.startDate}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                startDate: e.target.value,
-              })
-            }
-          />
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) =>
+                  setStartDate(e.target.value)
+                }
+                required
+              />
+            </div>
 
-          <br /><br />
+            <div>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: "600",
+                }}
+              >
+                End Date
+              </label>
 
-          <input
-            type="date"
-            value={form.endDate}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                endDate: e.target.value,
-              })
-            }
-          />
-
-          <br /><br />
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) =>
+                  setEndDate(e.target.value)
+                }
+                required
+              />
+            </div>
+          </div>
 
           <input
             type="number"
             placeholder="Budget"
-            value={form.budget}
+            value={budget}
             onChange={(e) =>
-              setForm({
-                ...form,
-                budget: e.target.value,
-              })
+              setBudget(e.target.value)
             }
+            required
           />
 
-          <br /><br />
+          <select
+            value={travelType}
+            onChange={(e) =>
+              setTravelType(e.target.value)
+            }
+            required
+          >
+            <option value="">
+              Select Travel Type
+            </option>
 
-          <button type="submit">
-            Create Trip
+            <option>Adventure</option>
+            <option>Luxury</option>
+            <option>Family</option>
+            <option>Solo</option>
+            <option>Couple</option>
+          </select>
+
+          <button
+            type="submit"
+            style={{
+              padding: "16px",
+              borderRadius: "16px",
+              background:
+                "linear-gradient(135deg,#ff512f,#dd2476)",
+              color: "white",
+              fontSize: "17px",
+              fontWeight: "700",
+              marginTop: "10px",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Generate Trip
           </button>
-
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,18 +1,35 @@
-import { Routes, Route } from "react-router-dom";
+import React from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
+import Navbar from "./components/Navbar";
+
+import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
 import CreateTrip from "./pages/CreateTrip";
-import Itinerary from "./pages/Itinerary";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/create-trip" element={<CreateTrip />} />
-      <Route path="/itinerary" element={<Itinerary />} />
-    </Routes>
+    <BrowserRouter>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/create-trip"
+          element={<CreateTrip />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
