@@ -1,57 +1,121 @@
 import { useState } from "react";
-import API from "../services/api";
-import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const res = await API.post("/auth/login", form);
-
-      login(res.data.user);
-
+    // Demo credentials
+    if (
+      form.email === "admin@gmail.com" &&
+      form.password === "123456"
+    ) {
       alert("Login Successful");
-    } catch (error) {
-      alert(error.response?.data?.message || "Login Failed");
+      navigate("/dashboard");
+    } else {
+      alert("Invalid Email or Password");
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Login</h1>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f4f4f4",
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          background: "white",
+          padding: "40px",
+          borderRadius: "12px",
+          width: "320px",
+          boxShadow: "0 0 10px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h1
+          style={{
+            marginBottom: "20px",
+            textAlign: "center",
+          }}
+        >
+          Traveloop Login
+        </h1>
 
-      <form onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"
           required
+          value={form.email}
           onChange={(e) =>
-            setForm({ ...form, email: e.target.value })
+            setForm({
+              ...form,
+              email: e.target.value,
+            })
           }
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "15px",
+          }}
         />
-
-        <br /><br />
 
         <input
           type="password"
           placeholder="Password"
           required
+          value={form.password}
           onChange={(e) =>
-            setForm({ ...form, password: e.target.value })
+            setForm({
+              ...form,
+              password: e.target.value,
+            })
           }
+          style={{
+            width: "100%",
+            padding: "12px",
+            marginBottom: "20px",
+          }}
         />
 
-        <br /><br />
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "12px",
+            background: "#0b1b3f",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "16px",
+          }}
+        >
+          Login
+        </button>
 
-        <button type="submit">Login</button>
+        <p
+          style={{
+            marginTop: "15px",
+            fontSize: "14px",
+            color: "gray",
+            textAlign: "center",
+          }}
+        >
+          Demo Login:
+          <br />
+          admin@gmail.com / 123456
+        </p>
       </form>
     </div>
   );
