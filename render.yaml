@@ -1,0 +1,34 @@
+services:
+  # =========================
+  # Backend (Node + Express)
+  # =========================
+  - type: web
+    name: traveloop-server
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        value: https://traveloop-client.onrender.com
+
+  # =========================
+  # Frontend (React - Vite)
+  # =========================
+  - type: web
+    name: traveloop-client
+    runtime: node
+    plan: free
+    rootDir: client
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: VITE_API_URL
+        value: https://traveloop-server.onrender.com
