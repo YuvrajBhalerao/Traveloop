@@ -13,10 +13,45 @@ const CreateTrip = () => {
   const [endDate, setEndDate] =
     useState("");
 
-  const [budget, setBudget] = useState("");
-
   const [travelType, setTravelType] =
     useState("");
+
+  const [stops, setStops] = useState([]);
+
+  const [city, setCity] = useState("");
+
+  const [days, setDays] = useState("");
+
+  // Add stop
+
+  const addStop = () => {
+    if (!city || !days) return;
+
+    setStops([
+      ...stops,
+      {
+        city,
+        days,
+      },
+    ]);
+
+    setCity("");
+    setDays("");
+  };
+
+  // Automatic budget estimation
+
+  const calculateBudget = () => {
+    const totalDays = stops.reduce(
+      (sum, stop) =>
+        sum + Number(stop.days),
+      0
+    );
+
+    return totalDays * 5000;
+  };
+
+  // Create trip
 
   const handleCreateTrip = (e) => {
     e.preventDefault();
@@ -26,13 +61,17 @@ const CreateTrip = () => {
       destination,
       startDate,
       endDate,
-      budget,
       travelType,
+      stops,
+      estimatedBudget:
+        calculateBudget(),
     };
 
     const existingTrips =
       JSON.parse(
-        localStorage.getItem("traveloopTrips")
+        localStorage.getItem(
+          "traveloopTrips"
+        )
       ) || [];
 
     existingTrips.push(newTrip);
@@ -59,7 +98,7 @@ const CreateTrip = () => {
         className="glass-card"
         style={{
           width: "100%",
-          maxWidth: "700px",
+          maxWidth: "800px",
           padding: "40px",
         }}
       >
@@ -95,10 +134,14 @@ const CreateTrip = () => {
             placeholder="Destination"
             value={destination}
             onChange={(e) =>
-              setDestination(e.target.value)
+              setDestination(
+                e.target.value
+              )
             }
             required
           />
+
+          {/* Dates */}
 
           <div
             style={{
@@ -111,8 +154,6 @@ const CreateTrip = () => {
             <div>
               <label
                 style={{
-                  display: "block",
-                  marginBottom: "8px",
                   fontWeight: "600",
                 }}
               >
@@ -123,7 +164,9 @@ const CreateTrip = () => {
                 type="date"
                 value={startDate}
                 onChange={(e) =>
-                  setStartDate(e.target.value)
+                  setStartDate(
+                    e.target.value
+                  )
                 }
                 required
               />
@@ -132,8 +175,6 @@ const CreateTrip = () => {
             <div>
               <label
                 style={{
-                  display: "block",
-                  marginBottom: "8px",
                   fontWeight: "600",
                 }}
               >
@@ -144,27 +185,23 @@ const CreateTrip = () => {
                 type="date"
                 value={endDate}
                 onChange={(e) =>
-                  setEndDate(e.target.value)
+                  setEndDate(
+                    e.target.value
+                  )
                 }
                 required
               />
             </div>
           </div>
 
-          <input
-            type="number"
-            placeholder="Budget"
-            value={budget}
-            onChange={(e) =>
-              setBudget(e.target.value)
-            }
-            required
-          />
+          {/* Travel Type */}
 
           <select
             value={travelType}
             onChange={(e) =>
-              setTravelType(e.target.value)
+              setTravelType(
+                e.target.value
+              )
             }
             required
           >
@@ -179,6 +216,115 @@ const CreateTrip = () => {
             <option>Couple</option>
           </select>
 
+          {/* Travel Stops */}
+
+          <div
+            className="glass-card"
+            style={{
+              padding: "20px",
+            }}
+          >
+            <h3
+              style={{
+                marginBottom: "15px",
+              }}
+            >
+              Add Travel Stops
+            </h3>
+
+            <div
+              style={{
+                display: "grid",
+                gap: "15px",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="City Name"
+                value={city}
+                onChange={(e) =>
+                  setCity(
+                    e.target.value
+                  )
+                }
+              />
+
+              <input
+                type="number"
+                placeholder="Number of Days"
+                value={days}
+                onChange={(e) =>
+                  setDays(
+                    e.target.value
+                  )
+                }
+              />
+
+              <button
+                type="button"
+                onClick={addStop}
+                style={{
+                  padding: "14px",
+                  borderRadius: "12px",
+                  background:
+                    "linear-gradient(135deg,#667eea,#764ba2)",
+                  color: "white",
+                  fontWeight: "700",
+                  border: "none",
+                }}
+              >
+                Add Stop
+              </button>
+            </div>
+
+            {/* Stops List */}
+
+            {stops.length > 0 && (
+              <div
+                style={{
+                  marginTop: "20px",
+                }}
+              >
+                {stops.map(
+                  (stop, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        padding: "12px",
+                        marginBottom: "10px",
+                        borderRadius:
+                          "12px",
+                        background:
+                          "rgba(255,255,255,0.4)",
+                      }}
+                    >
+                      📍 {stop.city} —{" "}
+                      {stop.days} days
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Budget */}
+
+          <div
+            style={{
+              padding: "18px",
+              borderRadius: "14px",
+              background:
+                "rgba(255,255,255,0.5)",
+              fontWeight: "700",
+              fontSize: "18px",
+            }}
+          >
+            Estimated Budget: ₹
+            {calculateBudget()}
+          </div>
+
+          {/* Submit */}
+
           <button
             type="submit"
             style={{
@@ -189,7 +335,6 @@ const CreateTrip = () => {
               color: "white",
               fontSize: "17px",
               fontWeight: "700",
-              marginTop: "10px",
               border: "none",
               cursor: "pointer",
             }}
